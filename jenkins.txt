@@ -1,85 +1,90 @@
-// Define environment variables
-env.DIRECTORY_PATH = '/Users/mariambanda/jenkins/jenkins'
-env.TESTING_ENVIRONMENT = 'testing-environment'
-env.PRODUCTION_ENVIRONMENT = 'Mariam'
-
-// Define the pipeline stages
+// Define the pipeline stages and steps
 pipeline {
     agent any
 
     stages {
+        // Stage 1: Build
         stage('Build') {
             steps {
-                echo 'Building the application...'
-                
+                echo 'Building the code...'
+                echo 'Using Maven to compile and package the code.'
+                // Commands to build the code using Maven
             }
         }
 
+        // Stage 2: Unit and Integration Tests
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit and integration tests...'
+                echo 'Running unit tests...'
+                echo 'Using JUnit for unit tests.'
+                // Commands to run unit tests using JUnit
                 
+                echo 'Running integration tests...'
+                echo 'Using JUnit for integration tests.'
+                // Commands to run integration tests using JUnit
             }
             post {
-                always {
-                    script {
-                        // Send email notification with logs attached
-                        emailext(
-                            to: 'minasulebanda@gmail.com',
-                            subject: "Unit and Integration Tests Stage Result: ${currentBuild.result}",
-                            body: "The stage 'Unit and Integration Tests' completed with result: ${currentBuild.result}.\nSee the attached logs for more details.",
-                            attachLog: true
-                        )
-                    }
+                success {
+                    echo 'Tests completed successfully.'
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Tests Stage Result: Success",
+                        body: "The stage 'Unit and Integration Tests' completed successfully.\n\nLogs are attached.",
+                        attachmentsPattern: '**/test-logs/*.log' // Attach logs
                 }
             }
         }
 
+        // Stage 3: Code Analysis
         stage('Code Analysis') {
             steps {
                 echo 'Running code analysis...'
-               
+                echo 'Using SonarQube for code analysis.'
+                // Commands to run code analysis using SonarQube
             }
         }
 
+        // Stage 4: Security Scan
         stage('Security Scan') {
             steps {
                 echo 'Running security scan...'
-                
+                echo 'Using OWASP ZAP for security scan.'
+                // Commands to run a security scan using OWASP ZAP
             }
             post {
-                always {
-                    script {
-                        // Send email notification with logs attached
-                        emailext(
-                            to: 'minasulebanda@gmail.com',
-                            subject: "Security Scan Stage Result: ${currentBuild.result}",
-                            body: "The stage 'Security Scan' completed with result: ${currentBuild.result}.\nSee the attached logs for more details.",
-                            attachLog: true
-                        )
-                    }
+                success {
+                    echo 'Security scan completed successfully.'
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Security Scan Stage Result: Success",
+                        body: "The stage 'Security Scan' completed successfully.\n\nLogs are attached.",
+                        attachmentsPattern: '**/security-logs/*.log' // Attach logs
                 }
             }
         }
 
+        // Stage 5: Deploy to Staging
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging...'
-               
+                echo 'Using deployment tool (e.g., Jenkins SSH or AWS CodeDeploy).'
+                // Commands to deploy the application to a staging server, such as an AWS EC2 instance
             }
         }
 
+        // Stage 6: Integration Tests on Staging
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging...'
-               
+                echo 'Running integration tests on staging environment...'
+                echo 'Using JUnit for integration tests.'
+                // Commands to run integration tests on the staging environment using JUnit
             }
         }
 
+        // Stage 7: Deploy to Production
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-              
+                echo 'Using deployment tool (e.g., Jenkins SSH or AWS CodeDeploy).'
+                // Commands to deploy the application to a production server, such as an AWS EC2 instance
             }
         }
     }
