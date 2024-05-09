@@ -10,41 +10,78 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Fetch the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
-                echo "Compile the code and generate any necessary artifacts"
+                echo 'Building the application...'
+               
             }
         }
 
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo "Unit tests"
-                echo "Integration tests"
+                echo 'Running unit and integration tests...'
+               
+            }
+            post {
+                
+                    success{
+                        // Send email notification
+                       
+                           mail to: 'minasulebanda@gmail.com',
+                            subject: "Unit and Integration Tests Stage Result
+                            body: "The stage 'Unit and Integration Tests' completed.",
+                           
+                        
+                    }
+                
             }
         }
 
-        stage('Code Quality Check') {
+        stage('Code Analysis') {
             steps {
-                echo "Check the quality of the code"
+                echo 'Running code analysis...'
+               
             }
         }
 
-        stage('Deploy') {
+        stage('Security Scan') {
             steps {
-                echo "Deploy the application to a testing environment specified by the environment variable: ${env.TESTING_ENVIRONMENT}"
+                echo 'Running security scan...'
+               
+            }
+            post {
+              
+                    success {
+                        // Send email notification
+                      
+                           mail to: 'minasulebanda@gmail.com',
+                            subject: "Security Scan Stage",
+                            body: "The stage 'Security Scan' completed.",
+                            
+                        )
+                    
+                }
             }
         }
 
-        stage('Approval') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Waiting for manual approval..."
-                sleep(time: 10, unit: 'SECONDS')
+                echo 'Deploying to Staging...'
+                
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging...'
+               
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo "Deploy the code to the production environment specified by the environment variable: ${env.PRODUCTION_ENVIRONMENT}"
+                echo 'Deploying to Production...'
+                
             }
         }
     }
 }
+
