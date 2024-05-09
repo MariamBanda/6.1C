@@ -21,17 +21,12 @@ pipeline {
                
             }
             post {
-                
-                    success{
-                        // Send email notification
-                       
-                           mail to: 'minasulebanda@gmail.com',
-                            subject: "Unit and Integration Tests Stage Result
-                            body: "The stage 'Unit and Integration Tests' completed.",
-                           
-                        
-                    }
-                
+                success {
+                    // Send email notification on success
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Unit and Integration Tests Stage Result: Success",
+                        body: "The stage 'Unit and Integration Tests' completed successfully."
+                }
             }
         }
 
@@ -45,19 +40,14 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Running security scan...'
-               
+
             }
             post {
-              
-                    success {
-                        // Send email notification
-                      
-                           mail to: 'minasulebanda@gmail.com',
-                            subject: "Security Scan Stage",
-                            body: "The stage 'Security Scan' completed.",
-                            
-                        )
-                    
+                success {
+                    // Send email notification on success
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Security Scan Stage Result: Success",
+                        body: "The stage 'Security Scan' completed successfully."
                 }
             }
         }
@@ -84,4 +74,3 @@ pipeline {
         }
     }
 }
-
