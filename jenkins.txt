@@ -11,22 +11,26 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-               
+                
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests...'
-               
+                
             }
             post {
-                success {
-                    // Send email notification on success
-                    mail to: 'minasulebanda@gmail.com',
-                        subject: "Unit and Integration Tests Stage Result: Success",
-                        body: "The stage 'Unit and Integration Tests' completed successfully."
-                        attachLog: true
+                always {
+                    script {
+                        // Send email notification with logs attached
+                        emailext(
+                            to: 'minasulebanda@gmail.com',
+                            subject: "Unit and Integration Tests Stage Result: ${currentBuild.result}",
+                            body: "The stage 'Unit and Integration Tests' completed with result: ${currentBuild.result}.\nSee the attached logs for more details.",
+                            attachLog: true
+                        )
+                    }
                 }
             }
         }
@@ -41,15 +45,19 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Running security scan...'
-
+                
             }
             post {
-                success {
-                    // Send email notification on success
-                    mail to: 'minasulebanda@gmail.com',
-                        subject: "Security Scan Stage Result: Success",
-                        body: "The stage 'Security Scan' completed successfully."
-                        attachLog: true
+                always {
+                    script {
+                        // Send email notification with logs attached
+                        emailext(
+                            to: 'minasulebanda@gmail.com',
+                            subject: "Security Scan Stage Result: ${currentBuild.result}",
+                            body: "The stage 'Security Scan' completed with result: ${currentBuild.result}.\nSee the attached logs for more details.",
+                            attachLog: true
+                        )
+                    }
                 }
             }
         }
@@ -57,7 +65,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging...'
-                
+               
             }
         }
 
@@ -71,7 +79,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-                
+              
             }
         }
     }
