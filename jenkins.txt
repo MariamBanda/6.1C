@@ -26,6 +26,7 @@ pipeline {
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Unit and Integration Tests Stage Result: Success",
                         body: "The stage 'Unit and Integration Tests' completed successfully."
+                        attachLog: true
                 }
             }
         }
@@ -48,6 +49,7 @@ pipeline {
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Security Scan Stage Result: Success",
                         body: "The stage 'Security Scan' completed successfully."
+                        attachLog: true
                 }
             }
         }
