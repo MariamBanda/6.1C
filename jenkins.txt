@@ -1,100 +1,78 @@
-// Define the Jenkins pipeline
 pipeline {
     agent any
 
     stages {
-        // Stage 1: Build
         stage('Build') {
             steps {
-                echo 'Building the code...'
-                echo 'Using Maven to compile and package the code.'
-                // Tool: Maven
-                // Commands: Use Maven commands to build and package the code
+                echo 'Building the application...'
             }
         }
 
-        // Stage 2: Unit and Integration Tests
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests...'
-                echo 'Using JUnit for unit tests.'
-                // Tool: JUnit
-                // Commands: Use JUnit commands to run unit tests
-                
-                echo 'Running integration tests...'
-                echo 'Using JUnit for integration tests.'
-                // Tool: JUnit
-                // Commands: Use JUnit commands to run integration tests
+                echo 'Running unit and integration tests...'
             }
             post {
-                success {
-                    echo 'Tests completed successfully.'
-                    // Send an email notification on success
-                    mail to: 'minasulebanda@gmail.com',
-                        subject: "Tests Stage Result: Success",
-                        body: "The stage 'Unit and Integration Tests' completed successfully.\n\nPlease find the logs attached.",
-                        attachments: 'test-logs/*.log' // Attach logs
+                always {
+                    script {
+                        // Send email notification with logs attached
+                        emailext(
+                            to: 'minasulebanda@gmail.com', // The recipient email address
+                            subject: "Unit and Integration Tests Stage Result: ${currentBuild.result}",
+                            body: """
+                            The stage 'Unit and Integration Tests' completed with result: ${currentBuild.result}.
+                            Please see the attached logs for more details.
+                            """,
+                            attachLog: true // Attach the logs to the email
+                        )
+                    }
                 }
             }
         }
 
-        // Stage 3: Code Analysis
         stage('Code Analysis') {
             steps {
                 echo 'Running code analysis...'
-                echo 'Using SonarQube for code analysis.'
-                // Tool: SonarQube
-                // Commands: Use SonarQube commands to analyze the code
             }
         }
 
-        // Stage 4: Security Scan
         stage('Security Scan') {
             steps {
                 echo 'Running security scan...'
-                echo 'Using OWASP ZAP for security scan.'
-                // Tool: OWASP ZAP
-                // Commands: Use OWASP ZAP commands to run a security scan
             }
             post {
-                success {
-                    echo 'Security scan completed successfully.'
-                    // Send an email notification on success
-                    mail to: 'minasulebanda@gmail.com',
-                        subject: "Security Scan Stage Result: Success",
-                        body: "The stage 'Security Scan' completed successfully.\n\nPlease find the logs attached.",
-                        attachments: 'security-logs/*.log' // Attach logs
+                always {
+                    script {
+                        // Send email notification with logs attached
+                        emailext(
+                            to: 'minasulebanda@gmail.com', // The recipient email address
+                            subject: "Security Scan Stage Result: ${currentBuild.result}",
+                            body: """
+                            The stage 'Security Scan' completed with result: ${currentBuild.result}.
+                            Please see the attached logs for more details.
+                            """,
+                            attachLog: true // Attach the logs to the email
+                        )
+                    }
                 }
             }
         }
 
-        // Stage 5: Deploy to Staging
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging...'
-                echo 'Using a deployment tool (e.g., Jenkins SSH or AWS CodeDeploy) to deploy to a staging server.'
-                // Tool: Jenkins SSH, AWS CodeDeploy
-                // Commands: Use the appropriate deployment tool to deploy to a staging server such as an AWS EC2 instance
             }
         }
 
-        // Stage 6: Integration Tests on Staging
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging environment...'
-                echo 'Using JUnit for integration tests on the staging environment.'
-                // Tool: JUnit
-                // Commands: Use JUnit commands to run integration tests on the staging environment
+                echo 'Running integration tests on staging...'
             }
         }
 
-        // Stage 7: Deploy to Production
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-                echo 'Using a deployment tool (e.g., Jenkins SSH or AWS CodeDeploy) to deploy to a production server.'
-                // Tool: Jenkins SSH, AWS CodeDeploy
-                // Commands: Use the appropriate deployment tool to deploy to a production server such as an AWS EC2 instance
             }
         }
     }
