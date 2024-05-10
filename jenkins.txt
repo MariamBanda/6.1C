@@ -83,7 +83,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-                echo 'Using deployment tool (e.g., Jenkins SSH or AWS CodeDeploy).'
+                echo 'Using deployment tool'
                 // Commands to deploy the application to a production server, such as an AWS EC2 instance
             }
         }
