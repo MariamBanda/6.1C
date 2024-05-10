@@ -1,4 +1,4 @@
-// Define the pipeline stages and steps
+// Define the Jenkins pipeline
 pipeline {
     agent any
 
@@ -8,7 +8,8 @@ pipeline {
             steps {
                 echo 'Building the code...'
                 echo 'Using Maven to compile and package the code.'
-                // Commands to build the code using Maven
+                // Tool: Maven
+                // Commands: Use Maven commands to build and package the code
             }
         }
 
@@ -17,19 +18,22 @@ pipeline {
             steps {
                 echo 'Running unit tests...'
                 echo 'Using JUnit for unit tests.'
-                // Commands to run unit tests using JUnit
+                // Tool: JUnit
+                // Commands: Use JUnit commands to run unit tests
                 
                 echo 'Running integration tests...'
                 echo 'Using JUnit for integration tests.'
-                // Commands to run integration tests using JUnit
+                // Tool: JUnit
+                // Commands: Use JUnit commands to run integration tests
             }
             post {
                 success {
                     echo 'Tests completed successfully.'
+                    // Send an email notification on success
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Tests Stage Result: Success",
-                        body: "The stage 'Unit and Integration Tests' completed successfully.\n\nLogs are attached.",
-                        attachmentsPattern: '**/test-logs/*.log' // Attach logs
+                        body: "The stage 'Unit and Integration Tests' completed successfully.\n\nPlease find the logs attached.",
+                        attachments: 'test-logs/*.log' // Attach logs
                 }
             }
         }
@@ -39,7 +43,8 @@ pipeline {
             steps {
                 echo 'Running code analysis...'
                 echo 'Using SonarQube for code analysis.'
-                // Commands to run code analysis using SonarQube
+                // Tool: SonarQube
+                // Commands: Use SonarQube commands to analyze the code
             }
         }
 
@@ -48,15 +53,17 @@ pipeline {
             steps {
                 echo 'Running security scan...'
                 echo 'Using OWASP ZAP for security scan.'
-                // Commands to run a security scan using OWASP ZAP
+                // Tool: OWASP ZAP
+                // Commands: Use OWASP ZAP commands to run a security scan
             }
             post {
                 success {
                     echo 'Security scan completed successfully.'
+                    // Send an email notification on success
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Security Scan Stage Result: Success",
-                        body: "The stage 'Security Scan' completed successfully.\n\nLogs are attached.",
-                        attachmentsPattern: '**/security-logs/*.log' // Attach logs
+                        body: "The stage 'Security Scan' completed successfully.\n\nPlease find the logs attached.",
+                        attachments: 'security-logs/*.log' // Attach logs
                 }
             }
         }
@@ -65,8 +72,9 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging...'
-                echo 'Using deployment tool (e.g., Jenkins SSH or AWS CodeDeploy).'
-                // Commands to deploy the application to a staging server, such as an AWS EC2 instance
+                echo 'Using a deployment tool (e.g., Jenkins SSH or AWS CodeDeploy) to deploy to a staging server.'
+                // Tool: Jenkins SSH, AWS CodeDeploy
+                // Commands: Use the appropriate deployment tool to deploy to a staging server such as an AWS EC2 instance
             }
         }
 
@@ -74,8 +82,9 @@ pipeline {
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment...'
-                echo 'Using JUnit for integration tests.'
-                // Commands to run integration tests on the staging environment using JUnit
+                echo 'Using JUnit for integration tests on the staging environment.'
+                // Tool: JUnit
+                // Commands: Use JUnit commands to run integration tests on the staging environment
             }
         }
 
@@ -83,8 +92,9 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-                echo 'Using deployment tool'
-                // Commands to deploy the application to a production server, such as an AWS EC2 instance
+                echo 'Using a deployment tool (e.g., Jenkins SSH or AWS CodeDeploy) to deploy to a production server.'
+                // Tool: Jenkins SSH, AWS CodeDeploy
+                // Commands: Use the appropriate deployment tool to deploy to a production server such as an AWS EC2 instance
             }
         }
     }
