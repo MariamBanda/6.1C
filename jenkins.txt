@@ -6,8 +6,6 @@ pipeline {
             steps {
                 echo 'Building the code using Maven...'
                 // Implement build automation tool (e.g., Maven)
-                // Generate build log file
-                writeFile file: 'logs/build.log', text: 'Build logs...'
             }
         }
 
@@ -17,23 +15,19 @@ pipeline {
                 // Implement test automation tools for unit tests
                 echo 'Running integration tests...'
                 // Implement test automation tools for integration tests
-                // Generate test log file
-                writeFile file: 'logs/test.log', text: 'Test logs...'
             }
             post {
                 success {
-                    // Send email notification on success with logs attached
+                    // Send email notification on success
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Unit and Integration Tests Stage Result: Success",
-                        body: "The stage 'Unit and Integration Tests' completed successfully.",
-                        attachments: 'logs/*.log'
+                        body: "The stage 'Unit and Integration Tests' completed successfully."
                 }
                 failure {
-                    // Send email notification on failure with logs attached
+                    // Send email notification on failure
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Unit and Integration Tests Stage Result: Failure",
-                        body: "The stage 'Unit and Integration Tests' failed.",
-                        attachments: 'logs/*.log'
+                        body: "The stage 'Unit and Integration Tests' failed."
                 }
             }
         }
@@ -42,8 +36,6 @@ pipeline {
             steps {
                 echo 'Running code analysis...'
                 // Implement code analysis tool
-                // Generate code analysis log file
-                writeFile file: 'logs/code_analysis.log', text: 'Code analysis logs...'
             }
         }
 
@@ -51,23 +43,19 @@ pipeline {
             steps {
                 echo 'Running security scan...'
                 // Implement security scan tool
-                // Generate security scan log file
-                writeFile file: 'logs/security_scan.log', text: 'Security scan logs...'
             }
             post {
                 success {
-                    // Send email notification on success with logs attached
+                    // Send email notification on success
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Security Scan Stage Result: Success",
-                        body: "The stage 'Security Scan' completed successfully.",
-                        attachments: 'logs/*.log'
+                        body: "The stage 'Security Scan' completed successfully."
                 }
                 failure {
-                    // Send email notification on failure with logs attached
+                    // Send email notification on failure
                     mail to: 'minasulebanda@gmail.com',
                         subject: "Security Scan Stage Result: Failure",
-                        body: "The stage 'Security Scan' failed.",
-                        attachments: 'logs/*.log'
+                        body: "The stage 'Security Scan' failed."
                 }
             }
         }
@@ -76,8 +64,6 @@ pipeline {
             steps {
                 echo 'Deploying the application to staging server...'
                 // Implement deployment to staging server (e.g., AWS EC2 instance)
-                // Generate deployment log file
-                writeFile file: 'logs/deploy_staging.log', text: 'Deployment to staging logs...'
             }
         }
 
@@ -85,8 +71,6 @@ pipeline {
             steps {
                 echo 'Running integration tests on staging environment...'
                 // Implement integration tests on staging environment
-                // Generate integration tests log file
-                writeFile file: 'logs/integration_staging.log', text: 'Integration tests on staging logs...'
             }
         }
 
@@ -94,12 +78,10 @@ pipeline {
             steps {
                 echo 'Deploying the application to production server...'
                 // Implement deployment to production server (e.g., AWS EC2 instance)
-                // Generate deployment log file
-                writeFile file: 'logs/deploy_production.log', text: 'Deployment to production logs...'
             }
         }
         
-      
+        
 
     }
 }
