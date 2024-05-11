@@ -16,14 +16,15 @@ pipeline {
                 always {
                     script {
                         // Send email notification with logs attached
-                        emailext(
+                        def logs = currentBuild.rawBuild.getLog(50).join("\n")
+                        mail(
                             to: 'minasulebanda@gmail.com', // The recipient email address
                             subject: "Unit and Integration Tests Stage Result: ${currentBuild.result}",
                             body: """
                             The stage 'Unit and Integration Tests' completed with result: ${currentBuild.result}.
-                            Please see the attached logs for more details.
-                            """,
-                            attachLog: true // Attach the logs to the email
+                            Here are the logs:
+                            ${logs}
+                            """
                         )
                     }
                 }
@@ -44,14 +45,15 @@ pipeline {
                 always {
                     script {
                         // Send email notification with logs attached
-                        emailext(
+                        def logs = currentBuild.rawBuild.getLog(50).join("\n")
+                        mail(
                             to: 'minasulebanda@gmail.com', // The recipient email address
                             subject: "Security Scan Stage Result: ${currentBuild.result}",
                             body: """
-                            The stage 'Security Scan' completed with result: ${currentBuild.result}.
-                            Please see the attached logs for more details.
-                            """,
-                            attachLog: true // Attach the logs to the email
+                            The stage 'Security Scan' is completed with result: ${currentBuild.result}.
+                            Here are the logs:
+                            ${logs}
+                            """
                         )
                     }
                 }
