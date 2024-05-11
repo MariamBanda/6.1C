@@ -18,72 +18,52 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Unit and Integration Tests Passed!'
-                    // Send notification email with logs attached
-                    sendNotification('Unit and Integration Tests Passed!', currentBuild.rawBuild.getLog(50).join("\n"))
+                    // Send email notification on success
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Unit and Integration Tests Stage Result: Success",
+                        body: "The stage 'Unit and Integration Tests' completed successfully."
                 }
                 failure {
-                    echo 'Unit and Integration Tests Failed!'
-                    // Send notification email with logs attached
-                    sendNotification('Unit and Integration Tests Failed!', currentBuild.rawBuild.getLog(50).join("\n"))
+                    // Send email notification on failure
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Unit and Integration Tests Stage Result: Failure",
+                        body: "The stage 'Unit and Integration Tests' failed."
                 }
             }
         }
 
         stage('Code Analysis') {
             steps {
-                echo 'Performing code analysis...'
-                // Integrate code analysis tool with Jenkins (e.g., SonarQube)
-            }
-            post {
-                success {
-                    echo 'Code Analysis Passed!'
-                    // Send notification email with logs attached
-                    sendNotification('Code Analysis Passed!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
-                failure {
-                    echo 'Code Analysis Failed!'
-                    // Send notification email with logs attached
-                    sendNotification('Code Analysis Failed!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
+                echo 'Running code analysis...'
+                // Implement code analysis tool
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
-                // Integrate security scanning tool with Jenkins (e.g., OWASP ZAP)
+                echo 'Running security scan...'
+                // Implement security scan tool
             }
             post {
                 success {
-                    echo 'Security Scan Passed!'
-                    // Send notification email with logs attached
-                    sendNotification('Security Scan Passed!', currentBuild.rawBuild.getLog(50).join("\n"))
+                    // Send email notification on success
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Security Scan Stage Result: Success",
+                        body: "The stage 'Security Scan' completed successfully."
                 }
                 failure {
-                    echo 'Security Scan Failed!'
-                    // Send notification email with logs attached
-                    sendNotification('Security Scan Failed!', currentBuild.rawBuild.getLog(50).join("\n"))
+                    // Send email notification on failure
+                    mail to: 'minasulebanda@gmail.com',
+                        subject: "Security Scan Stage Result: Failure",
+                        body: "The stage 'Security Scan' failed."
                 }
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying the application to staging server (e.g., AWS EC2 instance)...'
-                // Implement deployment to staging server
-            }
-            post {
-                success {
-                    echo 'Application deployed to Staging!'
-                    // Send notification email with logs attached
-                    sendNotification('Application deployed to Staging!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
-                failure {
-                    echo 'Failed to deploy application to Staging!'
-                    // Send notification email with logs attached
-                    sendNotification('Failed to deploy application to Staging!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
+                echo 'Deploying the application to staging server...'
+                // Implement deployment to staging server (e.g., AWS EC2 instance)
             }
         }
 
@@ -92,45 +72,16 @@ pipeline {
                 echo 'Running integration tests on staging environment...'
                 // Implement integration tests on staging environment
             }
-            post {
-                success {
-                    echo 'Integration Tests on Staging Passed!'
-                    // Send notification email with logs attached
-                    sendNotification('Integration Tests on Staging Passed!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
-                failure {
-                    echo 'Integration Tests on Staging Failed!'
-                    // Send notification email with logs attached
-                    sendNotification('Integration Tests on Staging Failed!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
-            }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying the application to production server (e.g., AWS EC2 instance)...'
-                // Implement deployment to production server
-            }
-            post {
-                success {
-                    echo 'Application deployed to Production!'
-                    // Send notification email with logs attached
-                    sendNotification('Application deployed to Production!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
-                failure {
-                    echo 'Failed to deploy application to Production!'
-                    // Send notification email with logs attached
-                    sendNotification('Failed to deploy application to Production!', currentBuild.rawBuild.getLog(50).join("\n"))
-                }
+                echo 'Deploying the application to production server...'
+                // Implement deployment to production server (e.g., AWS EC2 instance)
             }
         }
-    }
-}
+        
+        
 
-def sendNotification(subject, body) {
-    mail(
-        to: 'minasulebanda@gmail.com', // The recipient email address
-        subject: subject,
-        body: body
-    )
+    }
 }
