@@ -16,7 +16,7 @@ pipeline {
                 always {
                     script {
                         // Send email notification with logs attached
-                        def logs = currentBuild.rawBuild.getLog(50).join("\n")
+                        def logs = currentBuild.getLog().join("\n")
                         mail(
                             to: 'minasulebanda@gmail.com', // The recipient email address
                             subject: "Unit and Integration Tests Stage Result: ${currentBuild.result}",
@@ -45,7 +45,7 @@ pipeline {
                 always {
                     script {
                         // Send email notification with logs attached
-                        def logs = currentBuild.rawBuild.getLog(50).join("\n")
+                        def logs = currentBuild.getLog().join("\n")
                         mail(
                             to: 'minasulebanda@gmail.com', // The recipient email address
                             subject: "Security Scan Stage Result: ${currentBuild.result}",
